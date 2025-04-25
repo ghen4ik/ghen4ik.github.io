@@ -1,9 +1,336 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Website</title>
-  </head>
-  <body>
-    <h1>Welcome to My GitHub Website!</h1>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Day Weather Forecast in Chișinău</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f5ff;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .current-time {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .weather-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+        .weather-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            width: 220px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid;
+        }
+        /* Different colored borders for each day */
+        .weather-card:nth-child(1) { border-color: #3498db; } /* Monday - Blue */
+        .weather-card:nth-child(2) { border-color: #e74c3c; } /* Tuesday - Red */
+        .weather-card:nth-child(3) { border-color: #2ecc71; } /* Wednesday - Green */
+        .weather-card:nth-child(4) { border-color: #f39c12; } /* Thursday - Orange */
+        .weather-card:nth-child(5) { border-color: #9b59b6; } /* Friday - Purple */
+        .weather-card:nth-child(6) { border-color: #1abc9c; } /* Saturday - Teal */
+        .weather-card:nth-child(7) { border-color: #e67e22; } /* Sunday - Dark Orange */
+        
+        .weather-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        .day-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        .date {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+        .time {
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.9em;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .weather-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px;
+            transition: all 0.3s ease;
+        }
+        .weather-icon:hover {
+            transform: scale(1.15);
+        }
+        .temperature {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #2c3e50;
+            position: relative;
+        }
+        .temperature::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+            margin: 10px auto;
+        }
+        .description {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            text-transform: capitalize;
+            font-size: 1.1em;
+        }
+        .details {
+            font-size: 0.95em;
+            color: #555;
+            text-align: left;
+            margin-top: 15px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .details p {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .details p span:first-child {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .loading {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin: 50px 0;
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .weather-card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        /* Animation for snow */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>7-Day Weather Forecast in Chișinău</h1>
+        <div class="current-time" id="current-time">Loading current time...</div>
+        <div class="weather-container" id="weather-container">
+            <div class="loading">Loading weather data...</div>
+        </div>
+    </div>
+
+    <script>
+        // Function to update current time
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateString = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('current-time').textContent = `${dateString} | ${timeString}`;
+        }
+        
+        // Update time immediately and then every second
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 1000);
+
+        function fetchWeatherForecast() {
+            const apiKey = '73e590876f22a6d070921bd5d0f8eb7d'; // Replace with your API key
+            const city = 'Chisinau,MD';
+            const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&cnt=56`; // Increased cnt to get more data points
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const dailyForecasts = processForecastData(data.list);
+                    displayWeatherForecast(dailyForecasts, data.city);
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    document.getElementById('weather-container').innerHTML = '<div class="error">Error loading weather data. Please try again later.</div>';
+                });
+        }
+
+        function processForecastData(forecastList) {
+            const dailyData = {};
+            
+            forecastList.forEach(item => {
+                const date = new Date(item.dt * 1000);
+                const dateString = date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+                const dayKey = date.toLocaleDateString();
+                
+                if (!dailyData[dayKey]) {
+                    dailyData[dayKey] = {
+                        date: dateString,
+                        temps: [],
+                        descriptions: [],
+                        icons: [],
+                        windSpeeds: [],
+                        humidities: [],
+                        pressures: [],
+                        timestamps: []
+                    };
+                }
+                
+                dailyData[dayKey].temps.push(item.main.temp);
+                dailyData[dayKey].descriptions.push(item.weather[0].description);
+                dailyData[dayKey].icons.push(item.weather[0].icon);
+                dailyData[dayKey].windSpeeds.push(item.wind.speed);
+                dailyData[dayKey].humidities.push(item.main.humidity);
+                dailyData[dayKey].pressures.push(item.main.pressure);
+                dailyData[dayKey].timestamps.push(item.dt);
+            });
+            
+            const dailyForecasts = [];
+            const dayKeys = Object.keys(dailyData).sort();
+            
+            // Ensure we have exactly 7 days of forecast
+            const forecastDays = dayKeys.length >= 7 ? 7 : dayKeys.length;
+            
+            for (let i = 0; i < forecastDays; i++) {
+                const dayKey = dayKeys[i];
+                const day = dailyData[dayKey];
+                const maxTemp = Math.max(...day.temps);
+                const minTemp = Math.min(...day.temps);
+                const avgTemp = day.temps.reduce((a, b) => a + b, 0) / day.temps.length;
+                
+                const descriptionCounts = {};
+                day.descriptions.forEach(desc => {
+                    descriptionCounts[desc] = (descriptionCounts[desc] || 0) + 1;
+                });
+                const mostCommonDesc = Object.keys(descriptionCounts).reduce((a, b) => 
+                    descriptionCounts[a] > descriptionCounts[b] ? a : b
+                );
+                
+                const mostCommonIndex = day.descriptions.indexOf(mostCommonDesc);
+                const iconCode = day.icons[mostCommonIndex];
+                
+                // Get the first timestamp for this day to display the time
+                const firstTime = new Date(day.timestamps[0] * 1000).toLocaleTimeString('en-US', { hour12: false });
+                
+                dailyForecasts.push({
+                    date: day.date,
+                    dayName: new Date(day.timestamps[0] * 1000).toLocaleDateString('en-US', { weekday: 'long' }),
+                    time: firstTime,
+                    maxTemp: maxTemp.toFixed(1),
+                    minTemp: minTemp.toFixed(1),
+                    avgTemp: avgTemp.toFixed(1),
+                    description: mostCommonDesc,
+                    iconCode: iconCode,
+                    windSpeed: (day.windSpeeds.reduce((a, b) => a + b, 0) / day.windSpeeds.length).toFixed(1),
+                    humidity: Math.round(day.humidities.reduce((a, b) => a + b, 0) / day.humidities.length),
+                    pressure: Math.round(day.pressures.reduce((a, b) => a + b, 0) / day.pressures.length)
+                });
+            }
+            
+            return dailyForecasts;
+        }
+
+        function displayWeatherForecast(dailyForecasts, cityInfo) {
+            const container = document.getElementById('weather-container');
+            container.innerHTML = '';
+            
+            dailyForecasts.forEach(day => {
+                const iconUrl = `https://openweathermap.org/img/wn/${day.iconCode}@2x.png`;
+                
+                const card = document.createElement('div');
+                card.className = 'weather-card';
+                card.innerHTML = `
+                    <div class="day-name">${day.dayName}</div>
+                    <div class="date">${day.date}</div>
+                    <div class="time">${day.time}</div>
+                    <img class="weather-icon" src="${iconUrl}" alt="${day.description}" 
+                         onmouseover="animateIcon(this, '${day.description}')" 
+                         onmouseout="resetIcon(this)">
+                    <div class="temperature">${day.avgTemp}°C</div>
+                    <div class="description">${day.description}</div>
+                    <div class="details">
+                        <p><span>High:</span> <span>${day.maxTemp}°C</span></p>
+                        <p><span>Low:</span> <span>${day.minTemp}°C</span></p>
+                        <p><span>Wind:</span> <span>${day.windSpeed} m/s</span></p>
+                        <p><span>Humidity:</span> <span>${day.humidity}%</span></p>
+                        <p><span>Pressure:</span> <span>${day.pressure} hPa</span></p>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function animateIcon(iconElement, description) {
+            if (description.includes('cloud')) {
+                iconElement.style.transform = 'rotate(10deg)';
+            } else if (description.includes('rain')) {
+                iconElement.style.transform = 'translateY(5px)';
+            } else if (description.includes('clear')){
+                iconElement.style.transform = 'scale(1.2)';
+            } else if (description.includes('snow')){
+                iconElement.style.animation = 'shake 0.5s infinite';
+            }
+        }
+
+        function resetIcon(iconElement) {
+            iconElement.style.transform = '';
+            iconElement.style.animation = '';
+        }
+
+        // Initial fetch
+        fetchWeatherForecast();
+        
+        // Update every hour
+        setInterval(fetchWeatherForecast, 3600000);
+    </script>
+</body>
 </html>
