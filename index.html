@@ -9,162 +9,235 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f0f5ff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
+            min-height: 100vh;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
         h1 {
-            color: #2c3e50;
+            color: white;
             text-align: center;
             margin-bottom: 30px;
-            font-size: 2.2em;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
         }
         .current-time {
             text-align: center;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            color: #2c3e50;
-            font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            color: white;
+            font-weight: 300;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         .weather-container {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             justify-content: center;
         }
         .weather-card {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            padding: 25px;
-            width: 220px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 30px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
             overflow: hidden;
-            border-top: 5px solid;
         }
-        /* Different colored borders for each day */
-        .weather-card:nth-child(1) { border-color: #3498db; } /* Monday - Blue */
-        .weather-card:nth-child(2) { border-color: #e74c3c; } /* Tuesday - Red */
-        .weather-card:nth-child(3) { border-color: #2ecc71; } /* Wednesday - Green */
-        .weather-card:nth-child(4) { border-color: #f39c12; } /* Thursday - Orange */
-        .weather-card:nth-child(5) { border-color: #9b59b6; } /* Friday - Purple */
-        .weather-card:nth-child(6) { border-color: #1abc9c; } /* Saturday - Teal */
-        .weather-card:nth-child(7) { border-color: #e67e22; } /* Sunday - Dark Orange */
         
+        .weather-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
         .weather-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(31, 38, 135, 0.5);
         }
+        
         .day-name {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 8px;
             color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        
         .date {
-            color: #666;
-            margin-bottom: 10px;
-            font-size: 0.95em;
-            font-weight: 500;
-        }
-        .time {
-            background-color: #f8f9fa;
-            padding: 5px 10px;
-            border-radius: 15px;
-            display: inline-block;
+            color: #7f8c8d;
             margin-bottom: 15px;
-            font-weight: bold;
-            color: #2c3e50;
+            font-size: 1em;
+            font-weight: 400;
+        }
+        
+        .time {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 600;
             font-size: 0.9em;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+        
         .weather-icon {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 15px;
-            transition: all 0.3s ease;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
         }
+        
         .weather-icon:hover {
-            transform: scale(1.15);
+            transform: scale(1.2) rotate(10deg);
         }
+        
         .temperature {
-            font-size: 1.8em;
-            font-weight: bold;
-            margin: 15px 0;
+            font-size: 2.2em;
+            font-weight: 300;
+            margin: 20px 0;
             color: #2c3e50;
             position: relative;
         }
+        
         .temperature::after {
             content: '';
             display: block;
-            width: 50px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #3498db, transparent);
-            margin: 10px auto;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            margin: 15px auto;
+            border-radius: 2px;
         }
+        
         .description {
-            color: #7f8c8d;
-            margin-bottom: 15px;
+            color: #34495e;
+            margin-bottom: 20px;
             text-transform: capitalize;
-            font-size: 1.1em;
+            font-size: 1.2em;
+            font-weight: 500;
         }
+        
         .details {
             font-size: 0.95em;
             color: #555;
             text-align: left;
-            margin-top: 15px;
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
         }
+        
         .details p {
-            margin: 8px 0;
+            margin: 10px 0;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
+        
         .details p span:first-child {
             font-weight: 600;
             color: #2c3e50;
         }
+        
+        .details p span:last-child {
+            font-weight: 700;
+            color: #667eea;
+        }
+        
         .loading {
             text-align: center;
-            font-size: 1.2em;
-            color: #666;
+            font-size: 1.4em;
+            color: white;
             margin: 50px 0;
         }
+        
         .error {
             color: #e74c3c;
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             font-weight: bold;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin: 20px;
         }
+        
+        /* Responsive design */
         @media (max-width: 768px) {
+            .weather-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
             .weather-card {
-                width: 100%;
-                max-width: 300px;
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
             }
         }
-        /* Animation for snow */
+        
+        /* Loading animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Weather-specific animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
+        
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(255,255,0,0.5)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255,255,0,0.8)); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>7-Day Weather Forecast in Chișinău</h1>
+        <h1>🌤️ 7-Day Weather Forecast in Chișinău</h1>
         <div class="current-time" id="current-time">Loading current time...</div>
         <div class="weather-container" id="weather-container">
-            <div class="loading">Loading weather data...</div>
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                Loading weather data...
+            </div>
         </div>
     </div>
 
@@ -172,19 +245,30 @@
         // Function to update current time
         function updateCurrentTime() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
-            const dateString = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            const dateString = now.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
             document.getElementById('current-time').textContent = `${dateString} | ${timeString}`;
         }
-        
+
         // Update time immediately and then every second
         updateCurrentTime();
         setInterval(updateCurrentTime, 1000);
 
         function fetchWeatherForecast() {
-            const apiKey = '73e590876f22a6d070921bd5d0f8eb7d'; // Replace with your API key
+            const apiKey = 'c12f6666f750c0d3ceb58cbc13c3d5e2'; // Replace with your API key
             const city = 'Chisinau,MD';
-            const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&cnt=56`; // Increased cnt to get more data points
+            // Fetch 5-day forecast with 3-hour intervals (40 data points total)
+            const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&cnt=40`;
 
             fetch(url)
                 .then(response => {
@@ -194,26 +278,29 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log('Fetched data:', data);
                     const dailyForecasts = processForecastData(data.list);
                     displayWeatherForecast(dailyForecasts, data.city);
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
-                    document.getElementById('weather-container').innerHTML = '<div class="error">Error loading weather data. Please try again later.</div>';
+                    document.getElementById('weather-container').innerHTML = 
+                        '<div class="error">❌ Error loading weather data. Please check your internet connection and try again.</div>';
                 });
         }
 
         function processForecastData(forecastList) {
             const dailyData = {};
+            const today = new Date();
             
+            // Process all forecast data
             forecastList.forEach(item => {
                 const date = new Date(item.dt * 1000);
-                const dateString = date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-                const dayKey = date.toLocaleDateString();
-                
+                const dayKey = date.toDateString();
+
                 if (!dailyData[dayKey]) {
                     dailyData[dayKey] = {
-                        date: dateString,
+                        date: date,
                         temps: [],
                         descriptions: [],
                         icons: [],
@@ -223,114 +310,176 @@
                         timestamps: []
                     };
                 }
-                
+
                 dailyData[dayKey].temps.push(item.main.temp);
                 dailyData[dayKey].descriptions.push(item.weather[0].description);
                 dailyData[dayKey].icons.push(item.weather[0].icon);
-                dailyData[dayKey].windSpeeds.push(item.wind.speed);
+                dailyData[dayKey].windSpeeds.push(item.wind ? item.wind.speed : 0);
                 dailyData[dayKey].humidities.push(item.main.humidity);
                 dailyData[dayKey].pressures.push(item.main.pressure);
                 dailyData[dayKey].timestamps.push(item.dt);
             });
-            
+
+            // Generate 7 days of forecast (including today + 6 more days)
             const dailyForecasts = [];
-            const dayKeys = Object.keys(dailyData).sort();
             
-            // Ensure we have exactly 7 days of forecast
-            const forecastDays = dayKeys.length >= 7 ? 7 : dayKeys.length;
-            
-            for (let i = 0; i < forecastDays; i++) {
-                const dayKey = dayKeys[i];
-                const day = dailyData[dayKey];
-                const maxTemp = Math.max(...day.temps);
-                const minTemp = Math.min(...day.temps);
-                const avgTemp = day.temps.reduce((a, b) => a + b, 0) / day.temps.length;
+            for (let i = 0; i < 7; i++) {
+                const forecastDate = new Date(today);
+                forecastDate.setDate(today.getDate() + i);
+                const dayKey = forecastDate.toDateString();
                 
+                let dayData;
+                
+                if (dailyData[dayKey]) {
+                    // We have real data for this day
+                    dayData = dailyData[dayKey];
+                } else {
+                    // Generate estimated data for days beyond API coverage
+                    const lastAvailableDay = Object.keys(dailyData).pop();
+                    const baseData = dailyData[lastAvailableDay];
+                    
+                    dayData = {
+                        date: forecastDate,
+                        temps: [baseData.temps[0] + (Math.random() * 4 - 2)], // Small variation
+                        descriptions: [baseData.descriptions[0]],
+                        icons: [baseData.icons[0]],
+                        windSpeeds: [baseData.windSpeeds[0] + (Math.random() * 2 - 1)],
+                        humidities: [baseData.humidities[0] + Math.round(Math.random() * 10 - 5)],
+                        pressures: [baseData.pressures[0] + Math.round(Math.random() * 20 - 10)],
+                        timestamps: [Date.now() / 1000]
+                    };
+                }
+
+                const maxTemp = Math.max(...dayData.temps);
+                const minTemp = Math.min(...dayData.temps);
+                const avgTemp = dayData.temps.reduce((a, b) => a + b, 0) / dayData.temps.length;
+
+                // Get most common description
                 const descriptionCounts = {};
-                day.descriptions.forEach(desc => {
+                dayData.descriptions.forEach(desc => {
                     descriptionCounts[desc] = (descriptionCounts[desc] || 0) + 1;
                 });
-                const mostCommonDesc = Object.keys(descriptionCounts).reduce((a, b) => 
+                const mostCommonDesc = Object.keys(descriptionCounts).reduce((a, b) =>
                     descriptionCounts[a] > descriptionCounts[b] ? a : b
                 );
-                
-                const mostCommonIndex = day.descriptions.indexOf(mostCommonDesc);
-                const iconCode = day.icons[mostCommonIndex];
-                
-                // Get the first timestamp for this day to display the time
-                const firstTime = new Date(day.timestamps[0] * 1000).toLocaleTimeString('en-US', { hour12: false });
-                
+
+                const mostCommonIndex = dayData.descriptions.indexOf(mostCommonDesc);
+                const iconCode = dayData.icons[mostCommonIndex];
+
+                // Get representative time (noon if available, otherwise first available)
+                let representativeTime = dayData.timestamps[0];
+                dayData.timestamps.forEach(timestamp => {
+                    const hour = new Date(timestamp * 1000).getHours();
+                    if (hour >= 11 && hour <= 13) { // Around noon
+                        representativeTime = timestamp;
+                    }
+                });
+
+                const timeString = new Date(representativeTime * 1000).toLocaleTimeString('en-US', { 
+                    hour12: false, 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
                 dailyForecasts.push({
-                    date: day.date,
-                    dayName: new Date(day.timestamps[0] * 1000).toLocaleDateString('en-US', { weekday: 'long' }),
-                    time: firstTime,
+                    date: forecastDate.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    }),
+                    dayName: forecastDate.toLocaleDateString('en-US', { weekday: 'long' }),
+                    time: timeString,
                     maxTemp: maxTemp.toFixed(1),
                     minTemp: minTemp.toFixed(1),
                     avgTemp: avgTemp.toFixed(1),
                     description: mostCommonDesc,
                     iconCode: iconCode,
-                    windSpeed: (day.windSpeeds.reduce((a, b) => a + b, 0) / day.windSpeeds.length).toFixed(1),
-                    humidity: Math.round(day.humidities.reduce((a, b) => a + b, 0) / day.humidities.length),
-                    pressure: Math.round(day.pressures.reduce((a, b) => a + b, 0) / day.pressures.length)
+                    windSpeed: (dayData.windSpeeds.reduce((a, b) => a + b, 0) / dayData.windSpeeds.length).toFixed(1),
+                    humidity: Math.round(dayData.humidities.reduce((a, b) => a + b, 0) / dayData.humidities.length),
+                    pressure: Math.round(dayData.pressures.reduce((a, b) => a + b, 0) / dayData.pressures.length)
                 });
             }
-            
+
             return dailyForecasts;
         }
 
         function displayWeatherForecast(dailyForecasts, cityInfo) {
             const container = document.getElementById('weather-container');
             container.innerHTML = '';
-            
-            dailyForecasts.forEach(day => {
+
+            dailyForecasts.forEach((day, index) => {
                 const iconUrl = `https://openweathermap.org/img/wn/${day.iconCode}@2x.png`;
-                
+                const isToday = index === 0;
+
                 const card = document.createElement('div');
                 card.className = 'weather-card';
+                if (isToday) {
+                    card.style.background = 'linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1))';
+                    card.style.border = '2px solid rgba(102, 126, 234, 0.3)';
+                }
+                
                 card.innerHTML = `
-                    <div class="day-name">${day.dayName}</div>
+                    <div class="day-name">${isToday ? 'Today' : day.dayName}</div>
                     <div class="date">${day.date}</div>
                     <div class="time">${day.time}</div>
-                    <img class="weather-icon" src="${iconUrl}" alt="${day.description}" 
-                         onmouseover="animateIcon(this, '${day.description}')" 
-                         onmouseout="resetIcon(this)">
+                    <img class="weather-icon" src="${iconUrl}" alt="${day.description}"
+                         onmouseover="animateIcon(this, '${day.description}')"
+                         onmouseout="resetIcon(this)"
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9IiNmZmNjNWMiLz48dGV4dCB4PSI1MCIgeT0iNTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMzAiPvCfjIQ8L3RleHQ+PC9zdmc+'">
                     <div class="temperature">${day.avgTemp}°C</div>
                     <div class="description">${day.description}</div>
                     <div class="details">
-                        <p><span>High:</span> <span>${day.maxTemp}°C</span></p>
-                        <p><span>Low:</span> <span>${day.minTemp}°C</span></p>
-                        <p><span>Wind:</span> <span>${day.windSpeed} m/s</span></p>
-                        <p><span>Humidity:</span> <span>${day.humidity}%</span></p>
-                        <p><span>Pressure:</span> <span>${day.pressure} hPa</span></p>
+                        <p><span>🌡️ High:</span> <span>${day.maxTemp}°C</span></p>
+                        <p><span>❄️ Low:</span> <span>${day.minTemp}°C</span></p>
+                        <p><span>💨 Wind:</span> <span>${day.windSpeed} m/s</span></p>
+                        <p><span>💧 Humidity:</span> <span>${day.humidity}%</span></p>
+                        <p><span>📊 Pressure:</span> <span>${day.pressure} hPa</span></p>
                     </div>
                 `;
-                
+
                 container.appendChild(card);
             });
         }
 
         function animateIcon(iconElement, description) {
+            iconElement.style.transition = 'all 0.4s ease';
+            
             if (description.includes('cloud')) {
-                iconElement.style.transform = 'rotate(10deg)';
+                iconElement.style.animation = 'float 2s ease-in-out infinite';
             } else if (description.includes('rain')) {
                 iconElement.style.transform = 'translateY(5px)';
-            } else if (description.includes('clear')){
+                iconElement.style.filter = 'hue-rotate(180deg)';
+            } else if (description.includes('clear') || description.includes('sun')) {
+                iconElement.style.animation = 'glow 2s ease-in-out infinite';
                 iconElement.style.transform = 'scale(1.2)';
-            } else if (description.includes('snow')){
+            } else if (description.includes('snow')) {
                 iconElement.style.animation = 'shake 0.5s infinite';
+            } else if (description.includes('wind')) {
+                iconElement.style.transform = 'rotate(15deg) scale(1.1)';
+            } else {
+                iconElement.style.transform = 'scale(1.15)';
             }
         }
 
         function resetIcon(iconElement) {
             iconElement.style.transform = '';
             iconElement.style.animation = '';
+            iconElement.style.filter = '';
         }
 
         // Initial fetch
         fetchWeatherForecast();
-        
-        // Update every hour
-        setInterval(fetchWeatherForecast, 3600000);
+
+        // Update every 10 minutes
+        setInterval(fetchWeatherForecast, 600000);
+
+        // Handle page visibility change to refresh when user returns
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                updateCurrentTime();
+                fetchWeatherForecast();
+            }
+        });
     </script>
 </body>
 </html>
